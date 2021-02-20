@@ -50,7 +50,7 @@ void Bird::think(Pipe* pipe) {
         (double)pipe->get_x() / w_width
     })[0];
 
-    if (output > 0.5) {
+    if (output > 0.0) {
         jump();
     }
 }

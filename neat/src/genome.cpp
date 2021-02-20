@@ -297,7 +297,7 @@ Genome* Genome::crossover(Genome* other) {
 }
 
 double activation_function(double x) {
-    return x / (1.0 + std::abs(x));
+    return x / (1.0 + std::abs(x)); // tanh
 }
 
 std::vector<double> Genome::calculate(const std::vector<double>& input_vector) {
@@ -311,6 +311,7 @@ std::vector<double> Genome::calculate(const std::vector<double>& input_vector) {
     std::vector<double> output_vector(output);
     link_set_node<std::pair<int, int>*>* node = calculation_order.get_head();
     std::pair<int, int>* pair;
+    Node* cal_node;
 
     for (int i = 0; i < n; i++, itn++) {
         itn->second->set_val(input_vector[i]);
@@ -319,15 +320,18 @@ std::vector<double> Genome::calculate(const std::vector<double>& input_vector) {
     while (node != NULL) {
         pair = node->value;
 
-        if (pair->first != pair->second)
+        if (pair->first == pair->second) {
+            cal_node = nodes[pair->first];
+            cal_node->set_val(activation_function(cal_node->get_val()));
+        } else {
             connections[markings[*pair]]->calculate();
-        
+        }
         node = node->next;
     }
 
     n += output;
     for (int i = input; i < n; i++, itn++) {
-        output_vector[i - input] = activation_function(itn->second->get_val());
+        output_vector[i - input] = itn->second->get_val();
     }
 
     for (itn = nodes.begin(); itn != nodes.end(); itn++) {
