@@ -61,18 +61,34 @@ int main() {
     int spawn_pipe_timer = 2250;
     pipes.push_back(new Pipe(3, 200, 60, WIDTH, HEIGHT));
 
+    SDL_Rect bg1, bg2;
+    bg1.x = 0;
+    bg1.y = 0;
+    bg1.w = 1940 / 2;
+    bg1.h = 1000 / 2;
+
+    bg2.x = 1940 / 2;
+    bg2.y = 0;
+    bg2.w = 1940 / 2;
+    bg2.h = 1000 / 2;
+
     // Texture
-    SDL_Surface* tmp = IMG_Load("./flappy_bird/img/pipe.png");
+    SDL_Surface* tmp = IMG_Load("./img/pipe.png");
     SDL_Texture* pipe_texture = SDL_CreateTextureFromSurface(renderer, tmp);
     SDL_FreeSurface(tmp);
 
-    tmp = IMG_Load("./flappy_bird/img/macky_idle.png");
+    tmp = IMG_Load("./img/macky_idle.png");
     SDL_Texture* idle_texture = SDL_CreateTextureFromSurface(renderer, tmp);
     SDL_FreeSurface(tmp);
 
-    tmp = IMG_Load("./flappy_bird/img/macky_flap.png");
+    tmp = IMG_Load("./img/macky_flap.png");
     SDL_Texture* flap_texture = SDL_CreateTextureFromSurface(renderer, tmp);
     SDL_FreeSurface(tmp);
+
+    tmp = IMG_Load("./img/bg.png");
+    SDL_Texture* bg_texture = SDL_CreateTextureFromSurface(renderer, tmp);
+    SDL_FreeSurface(tmp);
+    SDL_SetTextureAlphaMod(bg_texture, 225);
 
     Bird* bird;
 
@@ -134,6 +150,9 @@ int main() {
                     spawn_pipe_timer = 2250;
                     generation++;
                     score = 0;
+
+                    bg1.x = 0;
+                    bg2.x = 1940 / 2;
                     std::cout << "START: GEN " << generation << ", " << score << "\n";
                 }
             }
@@ -142,6 +161,19 @@ int main() {
         // Clears the screen with a blue tint
         SDL_SetRenderDrawColor(renderer, 173, 216, 230, 255);
         SDL_RenderClear(renderer);
+        
+        bg1.x--; bg2.x--;
+
+        if (bg1.x + bg1.w < 0) {
+            bg1.x = bg2.x + bg2.w;
+        }
+
+        if (bg2.x + bg2.w < 0) {
+            bg2.x = bg1.x + bg1.w;
+        }
+
+        SDL_RenderCopy(renderer, bg_texture, NULL, &bg1);
+        SDL_RenderCopy(renderer, bg_texture, NULL, &bg2);
 
         // Render the pipes
         for (int i = pipes.size() - 1; i > -1; i--) {
