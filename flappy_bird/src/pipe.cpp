@@ -43,7 +43,7 @@ int Pipe::get_bottom() {
 
 // METHODS
 bool Pipe::is_outside() {
-    return x < -40;
+    return x < -width;
 }
 
 void Pipe::update(float delta) {

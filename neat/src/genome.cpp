@@ -532,8 +532,8 @@ void Genome::print() {
     printf("\n");
 }
 
-void Genome::to_file() {
-    FILE* fp = fopen("best.txt", "w");
+void Genome::to_file(std::string filename) {
+    FILE* fp = fopen(filename.c_str(), "w");
 
     // Copy the brain to a text file
     std::map<int, Node*>::iterator it = nodes.begin();
@@ -579,6 +579,14 @@ void Genome::to_file() {
         fprintf(fp, "%d->%d\n", pair.first, pair.second);
         head = head->next;
     }
+
+    fclose(fp);
+}
+
+void Genome::load_file(std::string filename) {
+    FILE* fp = fopen(filename.c_str(), "r");
+
+    // TODO: Add method
 
     fclose(fp);
 }

@@ -80,7 +80,8 @@ public:
 
     void evolve();
 
-    void to_file();
+    void to_file(std::string filename = "neat.txt");
+    void load_file(std::string filename = "neat.txt");
 };
 
 #endif

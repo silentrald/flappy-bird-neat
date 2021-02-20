@@ -82,7 +82,9 @@ public:
     void mutate_toggle_link();
 
     void print();
-    void to_file();
+
+    void to_file(std::string filename = "nn.txt");
+    void load_file(std::string filename = "nn.txt");
 };
 
 #endif

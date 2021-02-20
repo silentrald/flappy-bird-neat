@@ -1,10 +1,5 @@
 # NEAT with Flappy Bird (CPP)
 
-# Credits
-
-- Background Image: Sharmaine Gaw
-- Macky Sprite: Kysonn Dela Cerna
-
 # Requirements
 
 - SDL
@@ -29,3 +24,14 @@ sh build.sh
 # Run Command
 sh run.sh
 ```
+
+# Credits
+
+- Background Image: Sharmaine Gaw
+- Macky Sprite: Kysonn Dela Cerna
+
+# References
+
+- Paper: [Evolving Neural Networks throughAugmenting Topologies](http://nn.cs.utexas.edu/downloads/papers/stanley.ec02.pdf)
+- Article: [NEAT: An Awesome Approach to NeuroEvolution](https://towardsdatascience.com/neat-an-awesome-approach-to-neuroevolution-3eca5cc7930f)
+- Youtube(Java Implementation): [AI - Neat](https://www.youtube.com/watch?v=VMQOa4-rVxE&list=PLgomWLYGNl1fcL0o4exBShNeCC5tc6s9C&index=1)

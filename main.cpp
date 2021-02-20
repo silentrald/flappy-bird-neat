@@ -165,6 +165,7 @@ int main() {
     bool right_up = true;
     bool left_up = true;
 
+    // TODO: Print generation number, number of population, score
     while(running) {
         start = SDL_GetTicks();
         SDL_Event event;

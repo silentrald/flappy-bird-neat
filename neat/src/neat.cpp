@@ -265,8 +265,8 @@ void Neat::mutate() {
     }
 }
 
-void Neat::to_file() {
-    FILE* fp = fopen("neat.txt", "w");
+void Neat::to_file(std::string filename) {
+    FILE* fp = fopen(filename.c_str(), "w");
     Node* node;
     std::pair<int, int> pair;
 
@@ -283,6 +283,42 @@ void Neat::to_file() {
             pair.first,
             pair.second
         );
+    }
+
+    fclose(fp);
+}
+
+void Neat::load_file(std::string filename) {
+    // Delete all connections and nodes
+    for (auto it = all_connections.begin(); it != all_connections.end(); it++) {
+        delete it->second;
+    }
+
+    for (auto it = all_nodes.begin(); it != all_nodes.end(); it++) {
+        delete it->second;
+    }
+
+    all_connections.clear();
+    all_nodes.clear();
+    all_markings.clear();
+
+    FILE* fp = fopen(filename.c_str(), "r");
+
+    int hidden, innov, from, to;
+    Connection* connection;
+
+    // TODO: Check if this works
+    fscanf(fp, "Nodes\nInput: %d\nOutput: %d\nHidden: %d\n", &input, &output, &hidden);
+
+    hidden += input + output;
+    for (int i = 0; i < hidden; i++) {
+        all_nodes[i] = new Node(i);
+    }
+
+    fscanf(fp, "\nConnections:\n");
+    while (fscanf(fp, "%d: %d->%d", &innov, &from, &to)) {
+        all_connections[innov] = new Connection(get_node(from), get_node(to));
+        all_markings[std::make_pair(from, to)] = innov;
     }
 
     fclose(fp);
