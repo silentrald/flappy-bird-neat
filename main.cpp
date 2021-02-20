@@ -100,10 +100,17 @@ int main() {
     // creates a renderer to render our images 
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, render_flags); 
 
+    // Init system
     bool running = true;
     const int FPS = 60;
     const int SPF = 1000 / FPS;
     Uint32 start;
+
+    bool KEYS[322];
+
+    for(int i = 0; i < 322; i++) {
+        KEYS[i] = false;
+    }
 
     int generation = 1, score = 0;
     std::vector<Bird*> alive_birds;
@@ -153,6 +160,10 @@ int main() {
     SDL_SetTextureAlphaMod(bg_texture, 225);
 
     Bird* bird;
+    Genome* brain;
+    int target_bird = 0;
+    bool right_up = true;
+    bool left_up = true;
 
     while(running) {
         start = SDL_GetTicks();
@@ -160,11 +171,26 @@ int main() {
 
         while (SDL_PollEvent(&event)) { 
             int key;
+
             switch (event.type) {
                 case SDL_QUIT:
                     running = false; 
                     break;
+                case SDL_KEYDOWN:
+                    key = event.key.keysym.scancode;
+                    if (key < 322) KEYS[key] = true;
+                    break;
+                case SDL_KEYUP:
+                    key = event.key.keysym.scancode;
+                    if (key < 322) KEYS[key] = false;
+                    break;
             }
+        }
+
+        // QUIT
+        if (KEYS[SDL_SCANCODE_Q]) {
+            running = false;
+            break;
         }
 
         // Update values
@@ -243,27 +269,56 @@ int main() {
             pipes[i]->render(renderer, pipe_texture);
         }
 
+        // Update target bird
+        if (KEYS[SDL_SCANCODE_RIGHT] && right_up) {
+            target_bird++;
+            right_up = false;
+        } else if (!KEYS[SDL_SCANCODE_RIGHT] && !right_up) {
+            right_up = true;
+        }
+
+        if (KEYS[SDL_SCANCODE_LEFT] && left_up) {
+            target_bird--;
+            left_up = false;
+        } else if (!KEYS[SDL_SCANCODE_LEFT] && !left_up) {
+            left_up = true;
+        }
+
+        if (target_bird < 0) {
+            target_bird = alive_birds.size() - 1;
+        } else if (target_bird >= alive_birds.size()) {
+            target_bird = 0;
+        }
+
         // Render Birds
         // Lower opacity except for one bird
         SDL_SetTextureAlphaMod(idle_texture, 64);
         SDL_SetTextureAlphaMod(flap_texture, 64);
 
-        for (int i = alive_birds.size() - 1; i > 0; i--) {
-            bird = alive_birds[i];
-            bird->render(renderer, bird->get_vely() > 0.0f ? idle_texture : flap_texture);
+        for (int i = alive_birds.size() - 1; i > -1; i--) {
+            if (target_bird != i) {
+                bird = alive_birds[i];
+                bird->render(renderer, bird->get_vely() > 0.0f ? idle_texture : flap_texture);
+            }
         }
 
         // Highlight 1 bird
         SDL_SetTextureAlphaMod(idle_texture, 255);
         SDL_SetTextureAlphaMod(flap_texture, 255);
 
-        bird = alive_birds[0];
+        bird = alive_birds[target_bird];
         bird->render(renderer, bird->get_vely() > 0.0f ? idle_texture : flap_texture);
+        brain = bird->get_brain();
 
-        render_brain(renderer, bird->get_brain());
+        render_brain(renderer, brain);
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderPresent(renderer);
+
+        if (KEYS[SDL_SCANCODE_S]) {
+            neat.to_file();
+            brain->to_file();
+        }
 
         // FPS Regulator
         if (SPF > SDL_GetTicks() - start) {

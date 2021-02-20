@@ -4,6 +4,7 @@
 #include <map>
 #include <unordered_map>
 #include <unordered_set>
+#include <stdio.h>
 
 class Genome;
 #include "./genome.h"
@@ -78,6 +79,8 @@ public:
     Node* get_node(int id);
 
     void evolve();
+
+    void to_file();
 };
 
 #endif

@@ -486,13 +486,12 @@ void Genome::mutate_toggle_link() {
 }
 
 void Genome::print() {
-    printf("Nodes\nInput: [ ");
-
     std::map<int, Node*>::iterator it = nodes.begin();
     Connection* connection;
     std::pair<int, int> pair;
-
     int temp = neat->get_input();
+
+    printf("Nodes\nInput: [ ");
     for (int i = 0; i < temp; i++) {
         printf("%d ", it->first);
         it++;
@@ -510,6 +509,7 @@ void Genome::print() {
         printf("%d ", it->first);
         it++;
     }
+
     printf("]\n\nConnections\n");
     for (auto it = connections.begin(); it != connections.end(); it++) {
         connection = it->second;
@@ -530,4 +530,55 @@ void Genome::print() {
         head = head->next;
     }
     printf("\n");
+}
+
+void Genome::to_file() {
+    FILE* fp = fopen("best.txt", "w");
+
+    // Copy the brain to a text file
+    std::map<int, Node*>::iterator it = nodes.begin();
+    Connection* connection;
+    std::pair<int, int> pair;
+    int temp = neat->get_input();
+
+    fprintf(fp, "Nodes\nInput: [ ");
+    for (int i = 0; i < temp; i++) {
+        fprintf(fp, "%d ", it->first);
+        it++;
+    }
+
+    fprintf(fp, "]\nOutput: [ ");
+    temp = neat->get_output();
+    for (int i = 0; i < temp; i++) {
+        fprintf(fp, "%d ", it->first);
+        it++;
+    }
+
+    fprintf(fp, "]\nHidden: [ ");
+    while (it != nodes.end()) {
+        fprintf(fp, "%d ", it->first);
+        it++;
+    }
+
+    fprintf(fp, "]\n\nConnections\n");
+    for (auto it = connections.begin(); it != connections.end(); it++) {
+        connection = it->second;
+        fprintf(fp, "%d: %d->%d ; e: %d ; w: %lf\n",
+            it->first,
+            connection->get_from()->get_innovation_number(),
+            connection->get_to()->get_innovation_number(),
+            connection->is_enabled(),
+            connection->get_weight()
+        );
+    }
+
+    fprintf(fp, "\nCalc Order\n");
+    link_set_node<std::pair<int, int>*>* head = calculation_order.get_head();
+    while(head != NULL) {
+        pair = *head->value;
+        fprintf(fp, "%d->%d\n", pair.first, pair.second);
+        head = head->next;
+    }
+
+    fclose(fp);
 }

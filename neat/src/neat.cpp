@@ -264,3 +264,26 @@ void Neat::mutate() {
         (*it)->mutate();
     }
 }
+
+void Neat::to_file() {
+    FILE* fp = fopen("neat.txt", "w");
+    Node* node;
+    std::pair<int, int> pair;
+
+    fprintf(fp, "Nodes\n");
+    fprintf(fp, "Input: %d\n", input);
+    fprintf(fp, "Output: %d\n", output);
+    fprintf(fp, "Hidden: %d\n", (int) all_nodes.size() - input - output);
+
+    fprintf(fp, "\nConnections:\n");
+    for (auto it = all_markings.begin(); it != all_markings.end(); it++) {
+        pair = it->first;
+        fprintf(fp, "%d: %d->%d\n",
+            it->second,
+            pair.first,
+            pair.second
+        );
+    }
+
+    fclose(fp);
+}

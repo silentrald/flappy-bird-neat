@@ -5,6 +5,7 @@
 #include <map>
 #include <unordered_map>
 #include <vector>
+#include <stdio.h>
 
 #include "./connection.h"
 #include "./link_set.h"
@@ -81,6 +82,7 @@ public:
     void mutate_toggle_link();
 
     void print();
+    void to_file();
 };
 
 #endif
