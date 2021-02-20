@@ -34,4 +34,5 @@ sh run.sh
 
 - Paper: [Evolving Neural Networks throughAugmenting Topologies](http://nn.cs.utexas.edu/downloads/papers/stanley.ec02.pdf)
 - Article: [NEAT: An Awesome Approach to NeuroEvolution](https://towardsdatascience.com/neat-an-awesome-approach-to-neuroevolution-3eca5cc7930f)
-- Youtube(Java Implementation): [AI - Neat](https://www.youtube.com/watch?v=VMQOa4-rVxE&list=PLgomWLYGNl1fcL0o4exBShNeCC5tc6s9C&index=1)
+- Java Implementation: [AI - Neat](https://www.youtube.com/watch?v=VMQOa4-rVxE&list=PLgomWLYGNl1fcL0o4exBShNeCC5tc6s9C&index=1)
+- JS (Simple Neural Network): [Neuroevolution Flappy Bird](https://www.youtube.com/watch?v=c6y21FkaUqw)
