@@ -1,5 +1,5 @@
-*.DS_Store
-.vscode
-*.h.gch
+/*.DS_Store
+/.vscode
+/*.h.gch
 
-build
+/build
