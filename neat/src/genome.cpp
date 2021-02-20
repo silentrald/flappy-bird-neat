@@ -407,7 +407,6 @@ void Genome::mutate_link() {
         int innov = connection->get_innovation_number();
         connections[innov] = connection;
         markings[key] = innov;
-        
 
         innov = connection->get_to()->get_innovation_number();
         calculation_order.add_node_prev(

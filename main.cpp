@@ -12,7 +12,69 @@
 
 const int POPULATION = 500;
 const int WIDTH = 640;
-const int HEIGHT = 480; 
+const int HEIGHT = 480;
+
+const int S_WIDTH = WIDTH / 2;
+const int S_HEIGHT = HEIGHT / 2;
+
+int scale_x(double x) {
+    return x * S_WIDTH + S_WIDTH;
+}
+
+int scale_y(double y) {
+    return y * S_HEIGHT;
+}
+
+void render_brain(SDL_Renderer* renderer, Genome* brain) {
+    Connection* connection;
+    Node* from;
+    Node* to;
+    Node* node;
+
+    std::map<int, Connection*>::iterator connection_start = brain->get_connections_begin();
+    std::map<int, Connection*>::iterator connection_end = brain->get_connections_end();
+    std::map<int, Node*>::iterator node_start = brain->get_nodes_begin();
+    std::map<int, Node*>::iterator node_end = brain->get_nodes_end();
+
+    // Draw all connections
+    while (connection_start != connection_end) {
+        connection = connection_start->second;
+        from = connection->get_from();
+        to = connection->get_to();
+
+        if (connection->is_enabled()) {
+            SDL_SetRenderDrawColor(renderer, 0, 255, 0, 192); // green
+        } else {
+            SDL_SetRenderDrawColor(renderer, 255, 0, 0, 192); // red
+        }
+
+        SDL_RenderDrawLine(
+            renderer,
+            scale_x(from->get_x()),
+            scale_y(from->get_y()),
+            scale_x(to->get_x()),
+            scale_y(to->get_y())
+        );
+
+        connection_start++;
+    }
+
+    SDL_SetRenderDrawColor(renderer, 64, 64, 64, 192);
+
+    while (node_start != node_end) {
+        node = node_start->second;
+
+        SDL_Rect rect;
+        rect.x = scale_x(node->get_x()) - 5;
+        rect.y = scale_y(node->get_y()) - 5;
+        rect.w = 10;
+        rect.h = 10;
+        
+        SDL_RenderFillRect(renderer, &rect);
+
+        node_start++;
+    }
+}
 
 int main() {
     srand(time(NULL));
@@ -162,6 +224,7 @@ int main() {
         SDL_SetRenderDrawColor(renderer, 173, 216, 230, 255);
         SDL_RenderClear(renderer);
         
+        // BG SCROLL
         bg1.x--; bg2.x--;
 
         if (bg1.x + bg1.w < 0) {
@@ -197,7 +260,7 @@ int main() {
         bird = alive_birds[0];
         bird->render(renderer, bird->get_vely() > 0.0f ? idle_texture : flap_texture);
 
-        // TODO: Render that birds brain
+        render_brain(renderer, bird->get_brain());
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderPresent(renderer);

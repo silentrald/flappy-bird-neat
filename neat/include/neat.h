@@ -28,14 +28,14 @@ private:
     double excess_coefficient = 0.20;
     double disjoint_coefficient = 0.20;
     double weight_diff_coefficient = 0.20;
-    double weight_shift_strength = 1.0;
+    double weight_shift_strength = 0.8;
     double weight_random_strength = 1.0;
-    double probability_mutate_link = 0.25;
-    double probability_mutate_node = 0.25;
-    double probability_mutate_weight_shift = 0.25;
-    double probability_mutate_weight_random = 0.25;
-    double probability_mutate_toggle_link = 0.25;
-    double speciation_distance_threshold = 1.5;
+    double probability_mutate_link = 0.30;
+    double probability_mutate_node = 0.10;
+    double probability_mutate_weight_shift = 0.80;
+    double probability_mutate_weight_random = 0.40;
+    double probability_mutate_toggle_link = 0.01;
+    double speciation_distance_threshold = 1.0;
 
     // EVOLUTION
     void generate_species();
