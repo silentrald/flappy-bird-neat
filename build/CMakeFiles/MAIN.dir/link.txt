@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/MAIN.dir/main.cpp.o  -o MAIN   -L/home/silent/Documents/ML/neural_network/neural_network  -Wl,-rpath,/home/silent/Documents/ML/neural_network/neural_network -L/usr/local/lib -Wl,-rpath,/usr/local/lib -Wl,--enable-new-dtags -lSDL2 neural_network/libNEAT.a 

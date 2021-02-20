@@ -1,0 +1,2 @@
+/usr/bin/ar qc libNEAT.a  CMakeFiles/NEAT.dir/src/connection.cpp.o CMakeFiles/NEAT.dir/src/genome.cpp.o CMakeFiles/NEAT.dir/src/neat.cpp.o CMakeFiles/NEAT.dir/src/node.cpp.o CMakeFiles/NEAT.dir/src/species.cpp.o
+/usr/bin/ranlib libNEAT.a

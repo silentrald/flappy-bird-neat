@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/main.dir/main.cpp.o  -o main  -L/usr/local/lib -Wl,-rpath,/usr/local/lib -Wl,--enable-new-dtags -lSDL2 neat/libNEAT.a flappy_bird/libFLAPPY_BIRD.a -lSDL2 -lSDL2_image 

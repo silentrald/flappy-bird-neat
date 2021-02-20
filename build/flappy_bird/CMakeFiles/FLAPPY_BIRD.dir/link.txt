@@ -1,0 +1,2 @@
+/usr/bin/ar qc libFLAPPY_BIRD.a  CMakeFiles/FLAPPY_BIRD.dir/src/bird.cpp.o CMakeFiles/FLAPPY_BIRD.dir/src/pipe.cpp.o
+/usr/bin/ranlib libFLAPPY_BIRD.a
