@@ -1,9 +1,0 @@
-/home/silent/Documents/ML/neural_network/build/CMakeFiles/rebuild_cache.dir
-/home/silent/Documents/ML/neural_network/build/CMakeFiles/edit_cache.dir
-/home/silent/Documents/ML/neural_network/build/CMakeFiles/main.dir
-/home/silent/Documents/ML/neural_network/build/neat/CMakeFiles/rebuild_cache.dir
-/home/silent/Documents/ML/neural_network/build/neat/CMakeFiles/edit_cache.dir
-/home/silent/Documents/ML/neural_network/build/neat/CMakeFiles/NEAT.dir
-/home/silent/Documents/ML/neural_network/build/flappy_bird/CMakeFiles/rebuild_cache.dir
-/home/silent/Documents/ML/neural_network/build/flappy_bird/CMakeFiles/edit_cache.dir
-/home/silent/Documents/ML/neural_network/build/flappy_bird/CMakeFiles/FLAPPY_BIRD.dir
